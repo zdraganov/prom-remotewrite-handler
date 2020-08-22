@@ -1,0 +1,18 @@
+version: "3.0"
+services:
+  prom:
+    image: prom/prometheus
+    volumes:
+    - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+    - "9090:9090"
+    depends_on:
+    - handler
+    links:
+    - handler
+
+  handler:
+    build:
+      context: prom_write_adapter
+    ports:
+    - "1234"
